@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Livro Fotográfico sobre Vendas Novas — Dossier de Patrocínio</title>
+  <meta name="description" content="Dossier de patrocínio do livro de fotografia documental e urbanística sobre Vendas Novas, por João Cruz Fialho. Arquitetura, património e identidade urbana em 100 páginas." />
+
+  <!-- Open Graph (partilha em redes sociais / WhatsApp) -->
+  <meta property="og:title" content="Livro Fotográfico sobre Vendas Novas" />
+  <meta property="og:description" content="Uma viagem visual pela arquitetura, património e identidade urbana. Dossier de patrocínio." />
+  <meta property="og:type" content="website" />
+
+  <!-- Tipografia: serif editorial (Cormorant) + sans limpo (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (Play CDN) — sem build step, pronto a publicar -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Paleta institucional e tipografia do projeto
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:      '#15181c', // texto principal (quase preto)
+            graphite: '#3a4047', // texto secundário (grafite)
+            mist:     '#f5f5f2', // fundo cinza muito claro
+            paper:    '#ffffff', // branco puro
+            line:     '#e5e4de', // hairlines / separadores
+            navy: {
+              DEFAULT: '#163a5f', // azul-escuro institucional
+              deep:    '#0f2a44',
+              light:   '#2c5d8a',
+            },
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:    ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          maxWidth: { reading: '64ch' },
+          letterSpacing: { eyebrow: '0.3em' },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ---- Base ---- */
+    html { scroll-behavior: smooth; }
+    body { -webkit-font-smoothing: antialiased; }
+    ::selection { background: #163a5f; color: #fff; }
+    /* Compensar a navbar fixa ao saltar para âncoras */
+    section[id] { scroll-margin-top: 5rem; }
+
+    /* ---- Animação suave de entrada ao fazer scroll ---- */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ---- Galeria: imagens "respiram", subtil dessaturação que ganha cor no hover ---- */
+    .gallery-fig img {
+      filter: grayscale(18%) contrast(1.02);
+      transition: transform 1.1s cubic-bezier(.2,.7,.2,1), filter .8s ease;
+    }
+    .gallery-fig:hover img { transform: scale(1.05); filter: grayscale(0%); }
+    .gallery-fig figcaption { transition: opacity .5s ease, transform .6s ease; }
+
+    /* ---- Lightbox ---- */
+    #lightbox { transition: opacity .4s ease; }
+    #lightbox img { transition: transform .4s ease, opacity .4s ease; }
+
+    /* Linha decorativa fina sob os eyebrows */
+    .eyebrow::before { content: ""; display: inline-block; width: 28px; height: 1px; background: currentColor; margin-right: .9rem; vertical-align: middle; opacity: .6; }
+  </style>
+</head>
+
+<body class="bg-paper font-sans text-ink antialiased">
+
+  <!-- ============================================================= -->
+  <!-- NAVBAR                                                         -->
+  <!-- ============================================================= -->
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
+    <nav class="mx-auto max-w-7xl px-6 lg:px-10 flex items-center justify-between h-20">
+      <!-- Marca -->
+      <a href="#top" class="font-display text-xl md:text-2xl tracking-tight leading-none transition-colors">
+        Vendas&nbsp;Novas<span class="align-super text-[0.55em] font-sans tracking-[0.25em] ml-1 opacity-60">LIVRO</span>
+      </a>
+
+      <!-- Links (desktop) -->
+      <div class="hidden md:flex items-center gap-9 text-[0.78rem] font-medium tracking-[0.18em] uppercase">
+        <a href="#conceito"   class="nav-link transition-opacity hover:opacity-60">Conceito</a>
+        <a href="#portefolio" class="nav-link transition-opacity hover:opacity-60">Portefólio</a>
+        <a href="#patrocinio" class="nav-link transition-opacity hover:opacity-60">Patrocínio</a>
+        <a href="#contacto"   class="nav-link border border-current px-4 py-2 rounded-full hover:opacity-60 transition">Contacto</a>
+      </div>
+
+      <!-- Botão menu (mobile) -->
+      <button id="menuBtn" class="md:hidden p-2 -mr-2" aria-label="Abrir menu" aria-expanded="false">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </nav>
+
+    <!-- Menu mobile (drop) -->
+    <div id="mobileMenu" class="md:hidden hidden bg-paper/98 backdrop-blur border-t border-line">
+      <div class="px-6 py-6 flex flex-col gap-5 text-sm tracking-[0.15em] uppercase text-ink">
+        <a href="#conceito"   class="mobile-link">Conceito</a>
+        <a href="#portefolio" class="mobile-link">Portefólio</a>
+        <a href="#patrocinio" class="mobile-link">Patrocínio</a>
+        <a href="#contacto"   class="mobile-link text-navy">Contacto</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================= -->
+  <!-- 1. HERO                                                        -->
+  <!-- ============================================================= -->
+  <section id="top" class="relative min-h-screen flex items-end overflow-hidden">
+    <!-- Imagem monumental de abertura -->
+    <div class="absolute inset-0">
+      <img
+        src="assets/Capa_PaginaAbertura_PalacioPassagens.jpg"
+        alt="Palácio das Passagens — abertura do livro sobre Vendas Novas"
+        class="w-full h-full object-cover" />
+      <!-- Gradiente para legibilidade do texto -->
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/35 to-ink/45"></div>
+    </div>
+
+    <!-- Texto do hero -->
+    <div class="relative z-10 w-full mx-auto max-w-7xl px-6 lg:px-10 pb-20 md:pb-28 text-white">
+      <p class="eyebrow text-[0.72rem] font-medium tracking-eyebrow uppercase text-white/80 mb-7">
+        Dossier de Patrocínio · Fotografia Documental
+      </p>
+      <h1 class="font-display font-medium leading-[0.95] tracking-tight text-5xl sm:text-6xl md:text-7xl lg:text-8xl max-w-5xl">
+        Livro Fotográfico<br class="hidden sm:block" /> sobre Vendas Novas
+      </h1>
+      <p class="mt-7 max-w-xl text-lg md:text-xl font-light text-white/85 leading-relaxed">
+        Uma viagem visual pela arquitetura, património e identidade urbana.
+      </p>
+      <p class="mt-8 text-sm tracking-[0.2em] uppercase text-white/70">
+        Por <span class="text-white font-medium">João Cruz Fialho</span>, Fotógrafo
+      </p>
+    </div>
+
+    <!-- Indicador de scroll -->
+    <a href="#conceito" class="absolute z-10 bottom-7 left-1/2 -translate-x-1/2 text-white/70 hover:text-white transition" aria-label="Descer">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="animate-bounce"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- 2. O CONCEITO                                                  -->
+  <!-- ============================================================= -->
+  <section id="conceito" class="bg-paper py-24 md:py-36">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+
+        <!-- Coluna esquerda: rótulo -->
+        <div class="lg:col-span-4 reveal">
+          <p class="eyebrow text-[0.72rem] font-medium tracking-eyebrow uppercase text-navy mb-6">O Conceito</p>
+          <h2 class="font-display text-4xl md:text-5xl leading-[1.05] text-ink">
+            Uma cidade<br />contada em linhas.
+          </h2>
+        </div>
+
+        <!-- Coluna direita: texto editorial -->
+        <div class="lg:col-span-8 reveal">
+          <div class=”max-w-reading text-graphite text-lg md:text-[1.18rem] leading-[1.75]”>
+            <p>
+              <span class=”font-display text-5xl md:text-6xl float-left mr-3 mt-1 leading-[0.7] text-ink”>V</span>endas
+              Novas reconhece-se na sua geometria: no traçado que o quartel imprimiu à cidade, na
+              artéria principal estilo Gran Via que a atravessa em toda a sua extensão, nos espaços
+              desportivos da Avenida 25 de Abril, no desenho dos seus bairros periféricos, nos
+              diversos espaços religiosos e na pauta serena dos caminhos de ferro.
+            </p>
+            <div class=”mt-8 mb-2”></div>
+            <p>
+              Ao longo de <strong class=”font-medium text-ink”>100 páginas</strong>, o trabalho foca-se
+              exclusivamente no urbanismo da cidade — o <strong class=”font-medium text-ink”>Quartel (RA5)</strong>,
+              as <strong class=”font-medium text-ink”>igrejas</strong>, a <strong class=”font-medium text-ink”>estação
+              de caminhos de ferro</strong>, os seus <strong class=”font-medium text-ink”>bairros</strong>,
+              as suas <strong class=”font-medium text-ink”>avenidas</strong>, o
+              <strong class=”font-medium text-ink”>complexo desportivo</strong> — compondo um retrato coerente da
+              identidade de quem aqui vive.
+            </p>
+          </div>
+
+          <!-- Citação em caixa de destaque -->
+          <blockquote class=”mt-12 bg-navy/5 border border-navy/20 px-8 py-7 max-w-reading”>
+            <p class=”font-display italic text-2xl md:text-[1.65rem] text-navy leading-snug”>
+              “Vendas Novas é um lugar do qual se aprende a gostar. A cidade fotografa-se de forma tranquila, pacífica. É uma cidade de gente boa, uma cidade que vale a pena.”
+            </p>
+          </blockquote>
+
+          <!-- Estatísticas -->
+          <div class="mt-12 grid grid-cols-3 gap-6 border-t border-line pt-8 max-w-xl">
+            <div>
+              <p class="font-display text-4xl md:text-5xl text-navy">100</p>
+              <p class="mt-1 text-xs tracking-[0.18em] uppercase text-graphite">Páginas</p>
+            </div>
+            <div>
+              <p class="font-display text-4xl md:text-5xl text-navy">5</p>
+              <p class="mt-1 text-xs tracking-[0.18em] uppercase text-graphite">Núcleos Urbanos</p>
+            </div>
+            <div>
+              <p class="font-display text-4xl md:text-5xl text-navy">1</p>
+              <p class="mt-1 text-xs tracking-[0.18em] uppercase text-graphite">Cidade</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- 3. PORTEFÓLIO (galeria assimétrica + lightbox)                 -->
+  <!-- ============================================================= -->
+  <section id="portefolio" class="bg-mist py-24 md:py-36">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+
+      <!-- Cabeçalho da secção -->
+      <div class="max-w-3xl reveal">
+        <p class="eyebrow text-[0.72rem] font-medium tracking-eyebrow uppercase text-navy mb-6">Portefólio</p>
+        <h2 class="font-display text-4xl md:text-5xl leading-[1.05] text-ink">Vendas Novas, vista a vista.</h2>
+        <p class="mt-6 text-graphite text-lg leading-relaxed max-w-reading">
+          Uma seleção das séries que compõem o livro. Clique em qualquer imagem para a ver em ecrã inteiro.
+        </p>
+      </div>
+
+      <!-- Grelha assimétrica de fotografias reais de Vendas Novas.
+           No telemóvel: 1 coluna. Em ecrã grande: grelha de 6 colunas.
+           Linha 1: Avenida + Moinho | Linha 2: RA5 + Igreja
+           Linha 3: Mercado + Chafariz | Linha 4: Jardim + Rotunda | Linha 5: Panorâmica
+           src = versão pequena (grelha) · data-full = versão grande (lightbox). -->
+      <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6 reveal">
+
+        <!-- Linha 1: Avenida sob Chuva + Moinho de Vento -->
+        <figure class="gallery-fig group relative overflow-hidden bg-ink cursor-pointer lg:col-span-3 aspect-[3/2]"
+          data-full="assets/Portefolio_AvenidaChuva_4400px.jpg"
+          data-caption="Avenida sob chuva — Vendas Novas">
+          <img src="assets/Portefolio_AvenidaChuva_1500px.jpg"
+            alt="Avenida de Vendas Novas sob chuva" loading="lazy"
+            class="w-full h-full object-cover" />
+          <figcaption class="absolute left-5 bottom-5 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="block text-[0.62rem] tracking-[0.22em] uppercase text-white/70">Artérias da Cidade</span>
+            <span class="block font-display text-2xl">Avenida sob Chuva</span>
+          </figcaption>
+        </figure>
+
+        <figure class="gallery-fig group relative overflow-hidden bg-ink cursor-pointer lg:col-span-3 aspect-[3/2]"
+          data-full="assets/Portefolio_MoinhoVento_5624px.jpeg"
+          data-caption="Moinho de Vento — Vendas Novas">
+          <img src="assets/Portefolio_MoinhoVento_1400px.jpg"
+            alt="Moinho de Vento, Vendas Novas" loading="lazy"
+            class="w-full h-full object-cover" />
+          <figcaption class="absolute left-5 bottom-5 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="block text-[0.62rem] tracking-[0.22em] uppercase text-white/70">Património</span>
+            <span class="block font-display text-2xl">Moinho de Vento</span>
+          </figcaption>
+        </figure>
+
+        <!-- Linha 2: RA5 Noturna (larga) + Igreja do Quartel -->
+        <figure class="gallery-fig group relative overflow-hidden bg-ink cursor-pointer lg:col-span-4 aspect-[3/2]"
+          data-full="assets/Portefolio_RA5Noturna_4700px.jpeg"
+          data-caption="Quartel RA5 — fotografia noturna, Vendas Novas">
+          <img src="assets/Portefolio_RA5Noturna_1500px.jpg"
+            alt="Quartel RA5, fotografia noturna" loading="lazy"
+            class="w-full h-full object-cover" />
+          <figcaption class="absolute left-5 bottom-5 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="block text-[0.62rem] tracking-[0.22em] uppercase text-white/70">O Quartel</span>
+            <span class="block font-display text-2xl">RA5 — Noturna</span>
+          </figcaption>
+        </figure>
+
+        <figure class="gallery-fig group relative overflow-hidden bg-ink cursor-pointer lg:col-span-2 aspect-square"
+          data-full="assets/Portefolio_IgrejaQuartel_4844px.jpeg"
+          data-caption="Igreja do Quartel — Vendas Novas">
+          <img src="assets/Portefolio_IgrejaQuartel_1500px.jpg"
+            alt="Igreja do Quartel, Vendas Novas" loading="lazy"
+            class="w-full h-full object-cover" />
+          <figcaption class="absolute left-5 bottom-5 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="block text-[0.62rem] tracking-[0.22em] uppercase text-white/70">Património Religioso</span>
+            <span class="block font-display text-xl">Igreja do Quartel</span>
+          </figcaption>
+        </figure>
+
+        <!-- Linha 3: Mercado Municipal (largo) + Chafariz -->
+        <figure class="gallery-fig group relative overflow-hidden bg-ink cursor-pointer lg:col-span-4 aspect-[2/1]"
+          data-full="assets/Portefolio_MercadoMunicipal_6000px.jpeg"
+          data-caption="Mercado Municipal — Vendas Novas">
+          <img src="assets/Portefolio_MercadoMunicipal_1500px.jpg"
+            alt="Mercado Municipal de Vendas Novas" loading="lazy"
+            class="w-full h-full object-cover" />
+          <figcaption class="absolute left-5 bottom-5 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="block text-[0.62rem] tracking-[0.22em] uppercase text-white/70">Arquitetura Civil</span>
+            <span class="block font-display text-2xl">Mercado Municipal</span>
+          </figcaption>
+        </figure>
+
+        <figure class="gallery-fig group relative overflow-hidden bg-ink cursor-pointer lg:col-span-2 aspect-[4/3]"
+          data-full="assets/Portefolio_Xafariz_4716px.jpeg"
+          data-caption="Chafariz — Vendas Novas">
+          <img src="assets/Portefolio_Xafariz_1179px.jpg"
+            alt="Chafariz de Vendas Novas" loading="lazy"
+            class="w-full h-full object-cover" />
+          <figcaption class="absolute left-5 bottom-5 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="block text-[0.62rem] tracking-[0.22em] uppercase text-white/70">Património</span>
+            <span class="block font-display text-xl">Chafariz</span>
+          </figcaption>
+        </figure>
+
+        <!-- Linha 4: Jardim Público + Rotunda do Obus -->
+        <figure class="gallery-fig group relative overflow-hidden bg-ink cursor-pointer lg:col-span-3 aspect-[4/3]"
+          data-full="assets/Portefolio_JardimPublico_3932px.jpeg"
+          data-caption="Jardim Público — Vendas Novas">
+          <img src="assets/Portefolio_JardimPublico_2588px.jpg"
+            alt="Jardim Público de Vendas Novas" loading="lazy"
+            class="w-full h-full object-cover" />
+          <figcaption class="absolute left-5 bottom-5 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="block text-[0.62rem] tracking-[0.22em] uppercase text-white/70">Espaços Verdes</span>
+            <span class="block font-display text-2xl">Jardim Público</span>
+          </figcaption>
+        </figure>
+
+        <figure class="gallery-fig group relative overflow-hidden bg-ink cursor-pointer lg:col-span-3 aspect-[4/3]"
+          data-full="assets/Portefolio_RotundaObus2_4956px.jpeg"
+          data-caption="Rotunda do Obus — Vendas Novas">
+          <img src="assets/Portefolio_RotundaObus_1500px.jpg"
+            alt="Rotunda do Obus, Vendas Novas" loading="lazy"
+            class="w-full h-full object-cover" />
+          <figcaption class="absolute left-5 bottom-5 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="block text-[0.62rem] tracking-[0.22em] uppercase text-white/70">Memória Urbana</span>
+            <span class="block font-display text-2xl">Rotunda do Obus</span>
+          </figcaption>
+        </figure>
+
+        <!-- Linha 5: Panorâmica — fecha a galeria em largura total -->
+        <figure class="gallery-fig group relative overflow-hidden bg-ink cursor-pointer lg:col-span-6 aspect-[8/3]"
+          data-full="assets/Portefolio_Panoramica_9000px.jpeg"
+          data-caption="Panorâmica de Vendas Novas">
+          <img src="assets/Portefolio_Panoramica_3300px.jpg"
+            alt="Vista panorâmica de Vendas Novas" loading="lazy"
+            class="w-full h-full object-cover" />
+          <figcaption class="absolute left-6 bottom-6 text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+            <span class="block text-[0.62rem] tracking-[0.22em] uppercase text-white/70">Vista Geral</span>
+            <span class="block font-display text-2xl md:text-3xl">Panorâmica</span>
+          </figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- 4. ESCALÕES DE PATROCÍNIO                                      -->
+  <!-- ============================================================= -->
+  <section id="patrocinio" class="bg-paper py-24 md:py-36">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+
+      <!-- Cabeçalho -->
+      <div class="max-w-3xl reveal">
+        <p class="eyebrow text-[0.72rem] font-medium tracking-eyebrow uppercase text-navy mb-6">Escalões de Patrocínio</p>
+        <h2 class="font-display text-4xl md:text-5xl leading-[1.05] text-ink">Associe a sua marca à cidade.</h2>
+        <p class="mt-6 text-graphite text-lg leading-relaxed max-w-reading">
+          Quatro níveis de participação para empresas e instituições que queiram fazer parte deste registo do
+          património de Vendas Novas. Cada escalão integra as contrapartidas do anterior.
+        </p>
+      </div>
+
+      <!-- Cartões -->
+      <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4 reveal">
+
+        <!-- BRONZE -->
+        <div class="flex flex-col border border-line bg-paper p-8 transition hover:shadow-xl hover:-translate-y-1 duration-500">
+          <p class="text-xs tracking-[0.22em] uppercase text-graphite">Bronze</p>
+          <p class="mt-4 font-display text-5xl text-ink">100<span class="text-2xl align-top">€</span></p>
+          <ul class="mt-7 space-y-3 text-sm text-graphite leading-relaxed flex-1">
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> Nome na página de Patrocinadores do livro</li>
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> Menção nas redes sociais do projeto</li>
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> 1 exemplar do livro com dedicatória</li>
+          </ul>
+          <a href="mailto:joaofialho.jf@gmail.com?subject=Patroc%C3%ADnio%20Bronze%20%E2%80%94%20Livro%20Vendas%20Novas"
+             class="mt-8 text-sm tracking-[0.12em] uppercase text-ink border-b border-ink/30 pb-1 self-start hover:border-ink transition">Quero este escalão →</a>
+        </div>
+
+        <!-- PRATA -->
+        <div class="flex flex-col border border-line bg-paper p-8 transition hover:shadow-xl hover:-translate-y-1 duration-500">
+          <p class="text-xs tracking-[0.22em] uppercase text-graphite">Prata</p>
+          <p class="mt-4 font-display text-5xl text-ink">250<span class="text-2xl align-top">€</span></p>
+          <ul class="mt-7 space-y-3 text-sm text-graphite leading-relaxed flex-1">
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> Tudo o que o <em>Bronze</em> inclui</li>
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> Logótipo com destaque na lista de patrocinadores</li>
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> Agradecimento nominal na sessão de lançamento</li>
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> 2 exemplares do livro</li>
+          </ul>
+          <a href="mailto:joaofialho.jf@gmail.com?subject=Patroc%C3%ADnio%20Prata%20%E2%80%94%20Livro%20Vendas%20Novas"
+             class="mt-8 text-sm tracking-[0.12em] uppercase text-ink border-b border-ink/30 pb-1 self-start hover:border-ink transition">Quero este escalão →</a>
+        </div>
+
+        <!-- OURO -->
+        <div class="flex flex-col border border-navy/30 bg-paper p-8 transition hover:shadow-xl hover:-translate-y-1 duration-500">
+          <p class="text-xs tracking-[0.22em] uppercase text-navy">Ouro</p>
+          <p class="mt-4 font-display text-5xl text-ink">500<span class="text-2xl align-top">€</span></p>
+          <ul class="mt-7 space-y-3 text-sm text-graphite leading-relaxed flex-1">
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> Tudo o que a <em>Prata</em> inclui</li>
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> 1 página institucional dedicada no livro</li>
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> Logótipo no material de divulgação (cartazes e convites)</li>
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> 2 convites VIP para o lançamento</li>
+            <li class="flex gap-3"><span class="text-navy mt-px">—</span> 4 exemplares do livro</li>
+          </ul>
+          <a href="mailto:joaofialho.jf@gmail.com?subject=Patroc%C3%ADnio%20Ouro%20%E2%80%94%20Livro%20Vendas%20Novas"
+             class="mt-8 text-sm tracking-[0.12em] uppercase text-navy border-b border-navy/40 pb-1 self-start hover:border-navy transition">Quero este escalão →</a>
+        </div>
+
+        <!-- PLATINA (destaque) -->
+        <div class="relative flex flex-col bg-navy text-white p-8 shadow-2xl shadow-navy/30 transition hover:-translate-y-1 duration-500">
+          <span class="absolute top-5 right-5 text-[0.6rem] tracking-[0.2em] uppercase bg-white/10 border border-white/20 px-3 py-1 rounded-full">Patrono Principal</span>
+          <p class="text-xs tracking-[0.22em] uppercase text-white/70">Platina</p>
+          <p class="mt-4 font-display text-5xl">1000<span class="text-2xl align-top">€</span></p>
+          <ul class="mt-7 space-y-3 text-sm text-white/85 leading-relaxed flex-1">
+            <li class="flex gap-3"><span class="text-white/60 mt-px">—</span> Tudo o que o <em>Ouro</em> inclui</li>
+            <li class="flex gap-3"><span class="text-white/60 mt-px">—</span> Dupla página institucional (perfil da empresa)</li>
+            <li class="flex gap-3"><span class="text-white/60 mt-px">—</span> Destaque como Patrono Principal na contracapa</li>
+            <li class="flex gap-3"><span class="text-white/60 mt-px">—</span> Sessão fotográfica das instalações da empresa</li>
+            <li class="flex gap-3"><span class="text-white/60 mt-px">—</span> 10 exemplares numerados</li>
+          </ul>
+          <a href="mailto:joaofialho.jf@gmail.com?subject=Patroc%C3%ADnio%20Platina%20%E2%80%94%20Livro%20Vendas%20Novas"
+             class="mt-8 text-sm tracking-[0.12em] uppercase text-white border-b border-white/40 pb-1 self-start hover:border-white transition">Quero este escalão →</a>
+        </div>
+
+      </div>
+
+      <p class="mt-8 text-sm text-graphite italic">
+        Escalões adaptáveis a parcerias institucionais e ao Município. Condições personalizáveis mediante reunião.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- 5. CONTACTO & CALL TO ACTION                                   -->
+  <!-- ============================================================= -->
+  <section id="contacto" class="bg-ink text-white py-24 md:py-36">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+        <!-- Convite -->
+        <div class="lg:col-span-7 reveal">
+          <p class="eyebrow text-[0.72rem] font-medium tracking-eyebrow uppercase text-white/60 mb-6">Vamos conversar</p>
+          <h2 class="font-display text-4xl md:text-6xl leading-[1.02]">
+            Marque uma breve<br />reunião presencial.
+          </h2>
+          <p class="mt-7 text-white/70 text-lg leading-relaxed max-w-reading">
+            Apresento o projeto, o plano editorial e as contrapartidas de cada escalão sem qualquer compromisso.
+            Descarregue o dossier completo ou contacte-me diretamente.
+          </p>
+
+          <!-- CTA principal -->
+          <div class="mt-10 flex flex-wrap items-center gap-5">
+            <a id="pdfBtn" href="dossier-vendas-novas.pdf" download
+               class="inline-flex items-center gap-3 bg-white text-ink px-8 py-4 text-sm tracking-[0.14em] uppercase font-medium hover:bg-white/90 transition">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+              Descarregar Dossier (PDF)
+            </a>
+            <a href="mailto:joaofialho.jf@gmail.com?subject=Reuni%C3%A3o%20%E2%80%94%20Livro%20Vendas%20Novas"
+               class="inline-flex items-center gap-2 text-sm tracking-[0.14em] uppercase border-b border-white/40 pb-1 hover:border-white transition">
+              Agendar reunião →
+            </a>
+          </div>
+        </div>
+
+        <!-- Contactos -->
+        <div class="lg:col-span-5 reveal lg:border-l lg:border-white/15 lg:pl-16">
+          <dl class="space-y-8">
+            <div>
+              <dt class="text-[0.62rem] tracking-[0.22em] uppercase text-white/50">Fotógrafo</dt>
+              <dd class="mt-2 font-display text-2xl">João Cruz Fialho</dd>
+            </div>
+            <div>
+              <dt class="text-[0.62rem] tracking-[0.22em] uppercase text-white/50">Email</dt>
+              <dd class="mt-2 text-lg"><a href="mailto:joaofialho.jf@gmail.com" class="hover:text-white/70 transition">joaofialho.jf@gmail.com</a></dd>
+            </div>
+            <div>
+              <dt class="text-[0.62rem] tracking-[0.22em] uppercase text-white/50">Telemóvel</dt>
+              <dd class="mt-2 text-lg"><a href="tel:+351960052973" class="hover:text-white/70 transition">+351 960 052 973</a></dd>
+            </div>
+            <div>
+              <dt class="text-[0.62rem] tracking-[0.22em] uppercase text-white/50">Redes</dt>
+              <dd class="mt-2 flex gap-5 text-sm">
+                <a href="#" class="border-b border-white/30 pb-0.5 hover:border-white transition">Instagram</a>
+                <a href="#" class="border-b border-white/30 pb-0.5 hover:border-white transition">Facebook</a>
+                <a href="#" class="border-b border-white/30 pb-0.5 hover:border-white transition">LinkedIn</a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- FOOTER                                                         -->
+  <!-- ============================================================= -->
+  <footer class="bg-ink text-white/50 border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10 py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs tracking-[0.1em]">
+      <p>© <span id="year"></span> João Cruz Fialho · Livro Fotográfico sobre Vendas Novas</p>
+      <p class="uppercase">Dossier de Patrocínio Digital</p>
+    </div>
+  </footer>
+
+  <!-- ============================================================= -->
+  <!-- LIGHTBOX (ecrã inteiro)                                        -->
+  <!-- ============================================================= -->
+  <div id="lightbox" class="fixed inset-0 z-[100] hidden opacity-0 bg-ink/95 backdrop-blur-sm items-center justify-center p-4 md:p-10" role="dialog" aria-modal="true" aria-label="Visualizador de imagem">
+    <!-- Fechar -->
+    <button id="lbClose" class="absolute top-5 right-5 text-white/80 hover:text-white p-2" aria-label="Fechar">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <!-- Anterior -->
+    <button id="lbPrev" class="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2" aria-label="Anterior">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <!-- Seguinte -->
+    <button id="lbNext" class="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2" aria-label="Seguinte">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+    <!-- Imagem + legenda -->
+    <figure class="max-w-6xl max-h-[88vh] flex flex-col items-center">
+      <img id="lbImg" src="" alt="" class="max-h-[80vh] w-auto object-contain shadow-2xl" />
+      <figcaption id="lbCaption" class="mt-4 text-center text-white/70 text-sm tracking-wide font-light"></figcaption>
+    </figure>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- JAVASCRIPT                                                     -->
+  <!-- ============================================================= -->
+  <script>
+    /* ---------- Ano automático no footer ---------- */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ---------- Navbar: muda de transparente p/ sólida ao fazer scroll ---------- */
+    const navbar = document.getElementById('navbar');
+    function updateNav() {
+      const scrolled = window.scrollY > 40;
+      navbar.classList.toggle('bg-paper/95', scrolled);
+      navbar.classList.toggle('backdrop-blur', scrolled);
+      navbar.classList.toggle('shadow-sm', scrolled);
+      navbar.classList.toggle('border-b', scrolled);
+      navbar.classList.toggle('border-line', scrolled);
+      // Cor do texto: branco sobre o hero, escuro depois
+      navbar.classList.toggle('text-white', !scrolled);
+      navbar.classList.toggle('text-ink', scrolled);
+    }
+    updateNav();
+    window.addEventListener('scroll', updateNav, { passive: true });
+
+    /* ---------- Menu mobile ---------- */
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('hidden') === false;
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+    document.querySelectorAll('.mobile-link').forEach(a =>
+      a.addEventListener('click', () => mobileMenu.classList.add('hidden'))
+    );
+
+    /* ---------- Animação de entrada (scroll reveal) ---------- */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* ---------- Lightbox ---------- */
+    const figures   = Array.from(document.querySelectorAll('.gallery-fig'));
+    const lightbox  = document.getElementById('lightbox');
+    const lbImg     = document.getElementById('lbImg');
+    const lbCaption = document.getElementById('lbCaption');
+    let currentIndex = 0;
+
+    function showImage(i) {
+      currentIndex = (i + figures.length) % figures.length; // navegação circular
+      const fig = figures[currentIndex];
+      lbImg.src = fig.dataset.full;
+      lbImg.alt = fig.dataset.caption || '';
+      lbCaption.textContent = fig.dataset.caption || '';
+    }
+    function openLightbox(i) {
+      showImage(i);
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      requestAnimationFrame(() => lightbox.classList.remove('opacity-0'));
+      document.body.style.overflow = 'hidden'; // bloquear scroll do fundo
+    }
+    function closeLightbox() {
+      lightbox.classList.add('opacity-0');
+      document.body.style.overflow = '';
+      setTimeout(() => { lightbox.classList.add('hidden'); lightbox.classList.remove('flex'); }, 350);
+    }
+
+    figures.forEach((fig, i) => fig.addEventListener('click', () => openLightbox(i)));
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbPrev').addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex - 1); });
+    document.getElementById('lbNext').addEventListener('click', (e) => { e.stopPropagation(); showImage(currentIndex + 1); });
+    // Fechar ao clicar fora da imagem
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+    // Atalhos de teclado
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.classList.contains('hidden')) return;
+      if (e.key === 'Escape')     closeLightbox();
+      if (e.key === 'ArrowLeft')  showImage(currentIndex - 1);
+      if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+    });
+
+    /* ---------- Botão PDF: se o ficheiro ainda não existir, imprime a página como alternativa ---------- */
+    const pdfBtn = document.getElementById('pdfBtn');
+    pdfBtn.addEventListener('click', (e) => {
+      e.preventDefault(); // travamos sempre e decidimos a seguir
+      const url = pdfBtn.getAttribute('href');
+      fetch(url, { method: 'HEAD' })
+        .then(r => {
+          if (r.ok) {
+            // O PDF existe → força o download
+            const a = document.createElement('a');
+            a.href = url; a.download = '';
+            document.body.appendChild(a); a.click(); a.remove();
+          } else {
+            window.print(); // ainda não há PDF → imprime a página como alternativa
+          }
+        })
+        .catch(() => window.print()); // sem servidor (file://) ou erro de rede → imprime
+    });
+  </script>
+</body>
+</html>
